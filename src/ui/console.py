@@ -9,9 +9,9 @@ class ConsoleUI:
     
     def display_menu(self) -> None:
         print("\n===== MY TODO APP =====")
-        print("1. Add New Task")
-        print("2. Show All Tasks")
-        print("3. Edit Task")
+       print("1. Add New Task")
+        print("2. View All Tasks")
+        print("3. Update Task")
         print("4. Delete Task")
         print("5. Mark Task Done")
         print("6. Mark Task Not Done")
