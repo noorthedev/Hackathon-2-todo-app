@@ -15,7 +15,8 @@ The program runs in a continuous loop and responds to user selections until the 
 
 This project is designed as a **foundational console application**, making it ideal for learning Python fundamentals and serving as a base for future enhancements such as APIs or web applications.
 
----
+![image](https://github.com/user-attachments/assets/ca43d780-2e4e-464f-b5cd-745a9eca05d8)
+
 
 ## Features
 
