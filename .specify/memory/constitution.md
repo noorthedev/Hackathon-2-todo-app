@@ -1,55 +1,39 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Todo App Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Python FastAPI Standard
+The project must be written in Python using FastAPI. All API endpoints must leverage FastAPI's built-in features including automatic API documentation generation, dependency injection, and asynchronous request handling where appropriate.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### In-Memory Storage Only
+The application must use in-memory storage only (no database, no files). All data persistence is handled through memory structures with no external persistence mechanisms or file system dependencies.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Clean, Beginner-Friendly Code
+Code must be clean, readable, and beginner-friendly. All functions, classes, and modules must include clear documentation, follow consistent naming conventions, and avoid unnecessary complexity that could confuse new developers.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Pydantic Validation
+Use Pydantic models for all validation. All request/response data must be validated through Pydantic models with appropriate type hints and validation constraints.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### RESTful API Conventions
+Follow RESTful API conventions strictly. All endpoints must follow standard HTTP methods (GET, POST, PUT, DELETE) and resource naming patterns with appropriate status codes.
 
-### [PRINCIPLE_6_NAME]
+### HTTP Status Codes
+All API responses must use correct HTTP status codes. Success responses use appropriate 2xx codes, client errors use 4xx codes, and server errors use 5xx codes with clear error messages.
 
+## Additional Constraints
 
-[PRINCIPLE__DESCRIPTION]
+The application must be easy to run locally with minimal setup. Dependencies should be kept to a minimum and installation should be straightforward through standard Python package managers.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Security Requirements
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+Security-sensitive details must not be exposed. No sensitive information should be logged, returned in error messages, or stored in plain text. All error responses must be generic enough to not reveal internal system details.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+No over-engineering; keep the solution simple and correct. Features should be implemented with the minimum viable approach that satisfies requirements without adding unnecessary complexity.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution defines the mandatory practices for this project. All code changes must comply with these principles. Deviations require explicit amendment to this constitution.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-22 | **Last Amended**: 2025-12-22

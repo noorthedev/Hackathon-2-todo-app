@@ -1,0 +1,358 @@
+openapi: 3.0.3
+info:
+  title: In-Memory TODO CRUD API
+  description: A simple TODO API with in-memory storage
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /:
+    get:
+      summary: Health check endpoint
+      description: Returns API status information
+      responses:
+        '200':
+          description: API is running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  message:
+                    type: string
+                    example: "TODO API is running"
+
+  /todos:
+    post:
+      summary: Create a new TODO item
+      description: Creates a new TODO item with auto-incrementing ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoCreate'
+      responses:
+        '201':
+          description: TODO item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '400':
+          description: Invalid input provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Get all TODO items
+      description: Returns a list of all TODO items
+      responses:
+        '200':
+          description: List of all TODO items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TodoResponse'
+
+  /todos/{id}:
+    get:
+      summary: Get a specific TODO item
+      description: Returns a specific TODO item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The ID of the TODO item to retrieve
+      responses:
+        '200':
+          description: The requested TODO item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '404':
+          description: TODO item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update a complete TODO item
+      description: Updates a complete TODO item with the provided data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The ID of the TODO item to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoUpdate'
+      responses:
+        '200':
+          description: TODO item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '404':
+          description: TODO item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Invalid input provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Partially update a TODO item
+      description: Updates specific fields of a TODO item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The ID of the TODO item to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoPatch'
+      responses:
+        '200':
+          description: TODO item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '404':
+          description: TODO item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Invalid input provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a TODO item
+      description: Removes a TODO item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The ID of the TODO item to delete
+      responses:
+        '204':
+          description: TODO item deleted successfully
+        '404':
+          description: TODO item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /todos/{id}/toggle:
+    patch:
+      summary: Toggle TODO completion status
+      description: Flips the completion status of a TODO item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The ID of the TODO item to toggle
+      responses:
+        '200':
+          description: TODO item completion status toggled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '404':
+          description: TODO item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    TodoCreate:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: The title of the TODO item
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          description: Optional description of the TODO item
+          maxLength: 500
+          nullable: true
+        due_date:
+          type: string
+          format: date-time
+          description: Optional due date in ISO 8601 format
+          nullable: true
+        priority:
+          type: integer
+          description: Priority level (1-5), default 3
+          minimum: 1
+          maximum: 5
+          default: 3
+
+    TodoUpdate:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: The title of the TODO item
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          description: Optional description of the TODO item
+          maxLength: 500
+          nullable: true
+        due_date:
+          type: string
+          format: date-time
+          description: Optional due date in ISO 8601 format
+          nullable: true
+        priority:
+          type: integer
+          description: Priority level (1-5), default 3
+          minimum: 1
+          maximum: 5
+          default: 3
+        completed:
+          type: boolean
+          description: Completion status, default false
+          default: false
+
+    TodoPatch:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the TODO item
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          description: Optional description of the TODO item
+          maxLength: 500
+          nullable: true
+        due_date:
+          type: string
+          format: date-time
+          description: Optional due date in ISO 8601 format
+          nullable: true
+        priority:
+          type: integer
+          description: Priority level (1-5), default 3
+          minimum: 1
+          maximum: 5
+          default: 3
+        completed:
+          type: boolean
+          description: Completion status
+
+    TodoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the TODO item
+          minimum: 1
+        title:
+          type: string
+          description: The title of the TODO item
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          description: Optional description of the TODO item
+          maxLength: 500
+          nullable: true
+        due_date:
+          type: string
+          format: date-time
+          description: Optional due date in ISO 8601 format
+          nullable: true
+        priority:
+          type: integer
+          description: Priority level (1-5)
+          minimum: 1
+          maximum: 5
+        completed:
+          type: boolean
+          description: Completion status
+          default: false
+      required:
+        - id
+        - title
+        - priority
+        - completed
+
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error message
