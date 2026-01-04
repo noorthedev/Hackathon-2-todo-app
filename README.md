@@ -64,12 +64,20 @@ The application continues running until the user chooses to exit.
 
 ## Menu options:
 
-Option 1 – Add a new task
-Option 2 – View all tasks
-Option 3 – Update an existing task
-Option 4 – Delete a task
-Option 5 – Toggle task completion status
-Option 6 – Exit the application
+Welcome to My Todo App!
+Let's get organized! 🚀  
+
+===== MY TODO APP =====  
+1. Add New Task
+2. View All Tasks        
+3. Update Task
+4. Delete Task
+5. Mark Task Done        
+6. Mark Task Not Done    
+7. Exit Program
+======================== 
+Enter your choice (1-7): 
+
 Enter the corresponding option number and follow the on-screen prompts to perform actions.
 
 
